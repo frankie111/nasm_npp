@@ -1,0 +1,81 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ; ...
+    14                                      
+    15 00000000 F6FF                        a dw -10
+    16 00000002 F6                          b db -10
+    17 00000003 FFFF0F00                    c dd 0x000FFFFF
+    18 00000007 D4FEFFFFFFFFFFFF            x dq -300
+    19                                      
+    20 0000000F <res 00000004>              rezDiv resd 1
+    21                                      
+    22                                      
+    23                                  ; our code starts here
+    24                                  segment code use32 class=code
+    25                                      start:
+    26                                      
+    27 00000000 66A1[00000000]                  mov ax, word[a] ;ax = a
+    28 00000006 668B1D[02000000]                mov bx, word[b] ;bx = b
+    29 0000000D 66F7EB                          imul bx ;dx:ax = a*a
+    30 00000010 6652                            push dx
+    31 00000012 6650                            push ax
+    32 00000014 59                              pop ecx ;ecx = a*a
+    33                                          
+    34 00000015 A0[02000000]                    mov al, byte[b] ;al = b
+    35 0000001A 6698                            cbw ; al -> ax
+    36 0000001C 6699                            cwd ; ax -> dx:ax
+    37 0000001E 6652                            push dx
+    38 00000020 6650                            push ax
+    39 00000022 58                              pop eax ;eax = b
+    40 00000023 01C8                            add eax, ecx ;eax = a*a + b
+    41                                          
+    42 00000025 99                              cdq ;eax -> edx:eax
+    43 00000026 0305[07000000]                  add eax, dword[x+0]  
+    44 0000002C 0315[0B000000]                  add edx, dword[x+4]
+    45                                          ;edx:eax = a*a + b + x
+    46 00000032 52                              push edx
+    47 00000033 50                              push eax
+    48                                          
+    49 00000034 8A0D[02000000]                  mov cl, byte[b] ;cl = b
+    50 0000003A 8A1D[02000000]                  mov bl, byte[b] ;bl = b
+    51 00000040 00D9                            add cl, bl ;cl = b + b
+    52                                          
+    53                                          ;edx:eax / cl
+    54 00000042 88C8                            mov al, cl
+    55 00000044 6698                            cbw ;al -> ax
+    56 00000046 6699                            cwd ;ax -> dx:ax
+    57 00000048 6652                            push dx
+    58 0000004A 6650                            push ax
+    59 0000004C 58                              pop eax ;eax = dx:ax
+    60 0000004D 89C3                            mov ebx, eax ;ebx = eax
+    61 0000004F 58                              pop eax
+    62 00000050 5A                              pop edx
+    63 00000051 F7FB                            idiv ebx ;edx:eax /= ebx
+    64 00000053 50                              push eax
+    65                                          
+    66 00000054 A1[03000000]                    mov eax, dword[c] ;eax = c
+    67 00000059 8B0D[03000000]                  mov ecx, dword[c] ;ecx = c
+    68 0000005F F7E9                            imul ecx ;edx:eax = c*c
+    69                                          
+    70 00000061 89D1                            mov ecx, edx ;ecx = edx
+    71 00000063 89C3                            mov ebx, eax ;ebx = eax
+    72 00000065 58                              pop eax
+    73 00000066 F8                              clc ;CF = 0 
+    74 00000067 01D8                            add eax, ebx ;eax += ebx
+    75 00000069 83D200                          adc edx, 0 ;edx += cf
+    76                                  
+    77                                          ;edx:eax = (a*a+b+x)/(b+b)+c*c
+    78                                          
+    79                                          ; exit(0)
+    80 0000006C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    81 0000006E FF15[00000000]                  call    [exit]       ; call exit to terminate the program

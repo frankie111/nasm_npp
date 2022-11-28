@@ -1,0 +1,12 @@
+<NotepadPlus>
+    <Session activeView="1">
+        <mainView activeIndex="1">
+            <File firstVisibleLine="13" xOffset="0" scrollWidth="1170" startPos="1037" endPos="1037" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\npp\test.asm" backupFilePath="" originalFileLastModifTimestamp="1669513330" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="48" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="17" xOffset="0" scrollWidth="1170" startPos="1441" endPos="1441" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\npp\Rautoiu_Mircea_713_13_v2.asm" backupFilePath="" originalFileLastModifTimestamp="1669593708" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6488161" mapWrapIndentMode="-1" mapIsWrap="no" />
+        </mainView>
+        <subView activeIndex="1">
+            <File firstVisibleLine="28" xOffset="0" scrollWidth="1170" startPos="1189" endPos="1189" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\npp\test2.asm" backupFilePath="" originalFileLastModifTimestamp="1669552496" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6619247" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="8" xOffset="0" scrollWidth="1170" startPos="1333" endPos="1333" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\npp\Rautoiu_Mircea_713_13.asm" backupFilePath="" originalFileLastModifTimestamp="1669592327" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="48" mapWrapIndentMode="-1" mapIsWrap="no" />
+        </subView>
+    </Session>
+</NotepadPlus>
