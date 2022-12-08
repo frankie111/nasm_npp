@@ -11,42 +11,27 @@ import exit msvcrt.dll    ; exit is a function that ends the calling process. It
 ; our data is declared here (the variables needed by our program)
 segment data use32 class=data
     ; ...
-
-    s1 db 1, 3, 6, 2, 3, 7
-    s2 db 6, 3, 8, 1, 2, 5
-    len equ $-s2           ;len = 6 = Länge von s1 und s2
-    d times len db 0       ;Man reserviert [len] Bytes für d
-    
+    geburt dd 2004
     
 ; our code starts here
 segment code use32 class=code
     start:
         ; ...
         
-        mov ecx, len      ;ecx = 6
-        mov esi, 0
-        jecxz end         ;jump to end if ecx == 0
+        mov ecx, 0
+        mov edx, 0
+        mov ax, [geburt+0]
+        mov dx, [geburt+2]
+        mov bx, 10
         
-        for:
-            mov al, [s1+esi]
-            mov bl, [s2+esi]
-            cmp al, bl
-            jae maxA        ;jump if al >= bl to maxA
-            jb  maxB        ;jump if al < bl to maxB
+        while:
+            test ax, ax
+            jz end
             
-            maxA:
-                jecxz end
-                mov [d+esi], al   ;add al to d
-                inc esi
-                loop for          ;ecx-- and jump back to for
-            
-            maxB:
-                jecxz end
-                mov [d+esi], bl   ;add bl to d
-                inc  esi
-                loop for          ;ecx-- and jump back to for
-            
+            div bx
+            inc ecx
         
+        jmp while
         
     end:
         ; exit(0)

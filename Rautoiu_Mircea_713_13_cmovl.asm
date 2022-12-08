@@ -23,30 +23,21 @@ segment code use32 class=code
     start:
         ; ...
         
-        mov ecx, len      ;ecx = 6
+        mov ecx, len     ;ecx = 6
         mov esi, 0
-        jecxz end         ;jump to end if ecx == 0
+        jecxz end        ;jump to end if ecx == 0
         
         for:
+            mov ax, 0
+            mov bx, 0
             mov al, [s1+esi]
             mov bl, [s2+esi]
             cmp al, bl
-            jae maxA        ;jump if al >= bl to maxA
-            jb  maxB        ;jump if al < bl to maxB
+            cmovl ax, bx       ;move bx to ax if bl > al
+            mov [d+esi], al    ;add al to d
             
-            maxA:
-                jecxz end
-                mov [d+esi], al   ;add al to d
-                inc esi
-                loop for          ;ecx-- and jump back to for
-            
-            maxB:
-                jecxz end
-                mov [d+esi], bl   ;add bl to d
-                inc  esi
-                loop for          ;ecx-- and jump back to for
-            
-        
+            inc esi
+        loop for
         
     end:
         ; exit(0)

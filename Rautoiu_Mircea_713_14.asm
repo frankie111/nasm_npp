@@ -51,7 +51,7 @@ segment code use32 class=code
         mov ax, word[b] ;wir isolieren die Bits 3-15 von b
         and eax, 0000000000000000_1111111111111000b
         mov cl, 15
-        rol eax, cl ;Wir rotieren 3 Positionen nach links
+        rol eax, cl ;Wir rotieren 15 Positionen nach links
         or ebx, eax ;Wir fügen die Bits in das Ergebnis ein
         ;(ebx = 010111001000111_11111111001011000b)
     

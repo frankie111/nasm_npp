@@ -1,8 +1,7 @@
 <NotepadPlus>
     <Session activeView="0">
         <mainView activeIndex="0">
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1170" startPos="627" endPos="627" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\nasm_npp\Rautoiu_Mircea_713_13.asm" backupFilePath="" originalFileLastModifTimestamp="1669592327" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6553721" mapWrapIndentMode="-1" mapIsWrap="no" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="1170" startPos="0" endPos="0" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\nasm_npp\Rautoiu_Mircea_713_13_v2.asm" backupFilePath="" originalFileLastModifTimestamp="1669593708" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6553721" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="21" xOffset="0" scrollWidth="1170" startPos="1732" endPos="1732" selMode="0" lang="Assembly" encoding="-1" filename="D:\ASC\asm_tools\nasm_npp\Rautoiu_Mircea_713_5.asm" backupFilePath="D:\ASC\asm_tools\nasm_npp\backup\Rautoiu_Mircea_713_5.asm@2022-12-08_151533" originalFileLastModifTimestamp="1670505219" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="5439604" mapWrapIndentMode="-1" mapIsWrap="no" />
         </mainView>
         <subView activeIndex="0" />
     </Session>
