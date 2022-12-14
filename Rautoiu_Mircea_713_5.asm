@@ -35,19 +35,22 @@ segment code use32 class=code
         add esp, 4*2            ;free parameters on the stack, 4 = size of dword, 2 = no of parameters
         
         
+        ;print(message2)
         push dword message2
         call [printf]
         add esp, 4*1
         
-        
-        push dword b            ;push address of b
-        push dword hexFormat    ;read hex numbers
+        ;scanf(hexFormat, b)
+        push dword b       
+        push dword hexFormat
         call [scanf]
         add esp, 4*2
         
+        ;eax = a + b
         mov eax, [a]
         add eax, [b]
         
+        ;printf(output, eax)
         push dword eax
         push dword output
         call [printf]

@@ -24,7 +24,7 @@ segment data use32 class=data
     
     file_name times 30 db 0
     text times 120 db 0
-    access_mode db "w", 0
+    write_mode db "w", 0
     file_descriptor dd -1
     
 ; our code starts here
@@ -53,8 +53,8 @@ segment code use32 class=code
         call [scanf]
         add esp, 4*2
         
-        ;eax = fopen(file_name, access_mode)
-        push dword access_mode
+        ;eax = fopen(file_name, write_mode)
+        push dword write_mode
         push dword file_name
         call [fopen]
         add esp, 4*2
