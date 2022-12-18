@@ -1,23 +1,24 @@
 bits 32
 global start        
 extern exit
-extern printDec
+extern printDec, printf
 import exit msvcrt.dll
+import printf msvcrt.dll
 
 segment data use32 class=data
     ; ...
     
-    arr db 0Ah, 14h, 1eh, 28h, 32h
+    arr dd 0Ah, 14h, 1eh, 28h, 32h
          ;=10, 20,  30,  40 , 50
-    len equ $-arr
+    len equ ($-arr)/4
     
 ; our code starts here
 segment code use32 class=code
     start:
-        ; ...
-        push dword [arr]
-        push dword len
         
+        ;printDec(len, arr)
+        push dword arr  ;push the address of the first element in arr
+        push dword len  ;push the length of the array
         call printDec
         add esp, 4*2
         
