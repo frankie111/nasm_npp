@@ -16,10 +16,8 @@ segment data use32 class=data
     len equ 100
     text times (len+1) db 0
     
-    msg db "Max = %c with %d occurences", 0
-    
     occurences times 26 db 0
-    
+    msg db "Max = %c with %d occurences", 0
     
 segment code use32 class=code
     start:
@@ -35,40 +33,48 @@ segment code use32 class=code
         cmp eax, 0
         je end
         
-        
-        ;eax = fread(text, 1, len, file_descriptor)
-        ;eax = nr of chars read
-        push dword [file_descriptor]
-        push dword len
-        push dword 1
-        push dword text
-        call [fread]
-        add esp, 4*4
-        
-        mov ecx, eax
-        mov eax, 0
-        
-        ;count occurences of lowercase letters
-        mov esi, text
-        jecxz endfor
-        for:
-            lodsb                    ;al = current char in [text] ; esi++;
+        ;Read file and count occurences:
+        while:
+            ;read 100 chars from file
+            ;eax = fread(text, 1, len, file_descriptor)
+            ;eax = nr of chars read
+            push dword [file_descriptor]
+            push dword len
+            push dword 1
+            push dword text
+            call [fread]
+            add esp, 4*4
             
-            ;if(al < 'a' && al > 'z') continue;
-            cmp al, 'a'
-            jl continue
-            cmp al, 'z'
-            ja continue
-            
-            
-            ;else al -= 'a';
-            sub al, 'a'
-            inc byte [occurences+eax]
-            
-        continue:
-            loop for
-        endfor:
+            ;if(eax == 0) aka No chars read: break;
+            cmp eax, 0
+            je endwhile
         
+            ;ecx = eax = nr of chars read
+            mov ecx, eax
+            mov eax, 0
+        
+            ;count occurences of lowercase letters
+            mov esi, text
+            jecxz endfor
+            for:
+                lodsb                    ;al = current char in [text] ; esi++;
+            
+                ;if(al < 'a' && al > 'z') continue;
+                cmp al, 'a'
+                jl continue
+                cmp al, 'z'
+                ja continue
+            
+                ;else al -= 'a';
+                sub al, 'a'
+                inc byte [occurences+eax]
+            
+            continue:
+                loop for
+            endfor:
+            
+            jmp while
+        endwhile:
         
         ;find max number of occurences
         mov esi, occurences
