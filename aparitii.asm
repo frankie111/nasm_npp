@@ -16,9 +16,6 @@ segment data use32 class=data
     len equ 100
     text times (len+1) db 0
     
-    int_format db "%d ", 0
-    char_format db "%c ", 0
-    msg1 db "Read %d chars from file ", 0
     msg db "Max = %c with %d occurences", 0
     
     occurences times 26 db 0
@@ -69,7 +66,6 @@ segment code use32 class=code
             inc byte [occurences+eax]
             
         continue:
-            ;inc esi
             loop for
         endfor:
         
@@ -104,6 +100,7 @@ segment code use32 class=code
         push dword msg
         call [printf]
         add esp, 4*3
+        
         
         ;fclose(file_descriptor)
         push dword [file_descriptor]
