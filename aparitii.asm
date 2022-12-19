@@ -15,10 +15,13 @@ segment data use32 class=data
     file_descriptor dd -1
     len equ 100
     text times (len+1) db 0
-    format db "We've read %d chars from file. The text is: %s", 0
-    int_format db "occ %d", 0
     
-    occurences times 256 db 0
+    int_format db "%d ", 0
+    char_format db "%c ", 0
+    msg1 db "Read %d chars from file ", 0
+    msg db "Max = %c with %d occurences", 0
+    
+    occurences times 26 db 0
     
     
 segment code use32 class=code
@@ -45,49 +48,62 @@ segment code use32 class=code
         call [fread]
         add esp, 4*4
         
-        push eax
-        push dword eax
-        push dword int_format
-        call [printf]
-        add esp, 4*2
-        
-        pop eax
-        
-        ; push dword [occurences+0]
-        ; push dword int_format
-        ; call [printf]
-        ; add esp, 4*2
+        mov ecx, eax
+        mov eax, 0
         
         ;count occurences of lowercase letters
-        mov esi, 0
-        while:
-            cmp esi, eax
-            ja endwhile
+        mov esi, text
+        jecxz endfor
+        for:
+            lodsb                    ;al = current char in [text] ; esi++;
             
-            push eax
-            push dword esi
-            push dword int_format
-            call [printf]
-            add esp, 4*2
-            pop eax
+            ;if(al < 'a' && al > 'z') continue;
+            cmp al, 'a'
+            jl continue
+            cmp al, 'z'
+            ja continue
             
-            mov ebx, [text + esi]
-            ;sub ebx, 0;'a'
-            inc byte [occurences + ebx]
             
-            inc esi
-            jmp while
-        endwhile:
+            ;else al -= 'a';
+            sub al, 'a'
+            inc byte [occurences+eax]
+            
+        continue:
+            ;inc esi
+            loop for
+        endfor:
         
         
-        ; ;printf(format, eax, text)
-        ; push dword text
-        ; push dword eax
-        ; push dword format
-        ; call [printf]
-        ; add esp, 4*3
+        ;find max number of occurences
+        mov esi, occurences
+        mov ebx, 0  ;bl = max_val
+        mov edx, 0  ;edx = max_index
+        mov ecx, 26
+        for2:
+            lodsb           ;al = current nr in [occurences]; esi++;
+            
+            ;if(al <= max_val(bl)) continue;
+            cmp al, bl
+            jbe continue2
+            
+            ;else max_val(bl) = al; max_index(dx) = si;
+            mov bl, al
+            mov edx, esi
+            dec edx           ;esi was already incremented by lodsb
+            
+        continue2:
+            loop for2
+        endfor2:
         
-        ;printf(string_format, occurences)
+        sub edx, occurences     ;edx -= occurences => edx now in range [0, 26]
+        add edx, 'a'            ;edx += 'a' => edx now has ASCII code]
+        
+        ;print result:
+        push dword ebx
+        push dword edx
+        push dword msg
+        call [printf]
+        add esp, 4*3
         
         ;fclose(file_descriptor)
         push dword [file_descriptor]
