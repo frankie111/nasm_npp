@@ -90,8 +90,8 @@ segment code use32 class=code
             
             ;else max_val(bl) = al; max_index(dx) = si;
             mov bl, al
-            mov edx, esi
-            dec edx           ;esi was already incremented by lodsb
+            mov dx, si
+            dec dx           ;esi was already incremented by lodsb
             
         continue2:
             loop for2
