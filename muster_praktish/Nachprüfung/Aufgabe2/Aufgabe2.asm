@@ -13,13 +13,11 @@ segment data use32 class=data
     len dd 0
     max dd 0
     average dd 0
-    dformat db "%d ", 0
     
     file_name db "zahlen.txt", 0
     access_mode db "w", 0
     file_descriptor dd -1
     format db "max=%d, average=%d", 0
-    text db "some text", 0
     
     
 segment code use32 class=code
