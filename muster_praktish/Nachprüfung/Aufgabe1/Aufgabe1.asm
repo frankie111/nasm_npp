@@ -14,6 +14,7 @@ segment data use32 class=data
     file_descriptor dd -1
     len equ 100
     text times (len+1) db 0
+    format db "%s", 0
 
 segment code use32 class=code
     start:
@@ -34,10 +35,18 @@ segment code use32 class=code
         push dword [file_descriptor]
         push dword len
         push dword 1
+        push dword text
         call [fread]
         add esp, 4*4
         
+        push dword text
+        push dword format
+        call [printf]
+        add esp, 4*2
         
+        push dword [file_descriptor]
+        call [fclose]
+        add esp, 4
         
     end:
     
