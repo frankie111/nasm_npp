@@ -13,14 +13,13 @@ segment data use32 class=data
     num dd 0
     num_format db "%d", 0
     keine db "KEINE", 0
+    exists db 0
     file_name db "pruefung.txt", 0
     access_mode db "r", 0
     file_descriptor dd -1
     len equ 250
     text times (len+1) db 0
     format db "%s", 10, 0
-    char_format db "%c", 10, 0
-    int_format db "%d", 10, 0
     
 segment code use32 class=code
     start:
@@ -54,14 +53,7 @@ segment code use32 class=code
         ;fclose(file_descriptor)
         push dword [file_descriptor]
         call [fclose]
-        add esp, 4
-        
-        ;print(text)
-        push dword text
-        push dword format
-        call [printf]
-        add esp, 4*2
-        
+        add esp, 4 
         
         mov ecx, len
         mov esi, text   ;esi = current char
@@ -84,6 +76,8 @@ segment code use32 class=code
             ;if(esi - edi != num) continue;
             jne next
             
+            mov [exists], byte 1
+            
             push dword edi
             push dword format
             call [printf]
@@ -100,6 +94,16 @@ segment code use32 class=code
                 inc edi
                 jmp continue
         end_for:
+        
+        ;if (!exists) print(keine);
+        mov eax, [exists]
+        cmp eax, 1
+        jne end
+    
+        push dword keine
+        push dword format
+        call [printf]
+        add esp, 4*2
     
     end:
     
